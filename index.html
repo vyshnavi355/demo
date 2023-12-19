@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product report</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Catalyst-Powered eCommerce Store and Inventory Management Portal</h1>
+        <nav>
+              <a href="https://sitebuilder-837229811.zohositescontent.com/zstor">Zoho eCommerce</a><br><br>
+               <br>
+               <a href="https://inventory.zoho.com/app/837205762#/home/inventory-dashboard">Zoho Inventory Management portal</a>
+        
+        </nav>
+    </div>
+    
+    <!-- JavaScript code -->
+    <script>
+    new Vue({
+        el: "#app",
+        data: {
+            products: []
+        },
+        mounted() {
+            // Fetch products when the component is mounted
+            this.fetchProducts();
+        },
+        methods: {
+            fetchProducts() {
+                // Make a request to the fetch_products function
+                fetch("/fetch_products")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "success") {
+                            this.products = data.products;
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error(error));
+            },
+            placeOrder() {
+                // Make a request to the place_order function
+                fetch("/place_order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ /* order data */ })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "success") {
+                            console.log(data.message);
+                            // Optionally, update the UI or perform additional actions
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error(error));
+            }
+        }
+    });
+    </script>
+    
+    
+</body>
+</html>
